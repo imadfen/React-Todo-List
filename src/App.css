@@ -1,38 +1,118 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap");
+
+:root {
+  --titleFont: "Raleway", sans-serif;
+  --bodyFont: "Montserrat", sans-serif;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  padding: 10px;
+  width: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.title {
+  font-family: var(--titleFont);
+  font-size: 36px;
+}
+
+*:not(.title) {
+  font-family: var(--bodyFont);
+}
+
+.tabs-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border-bottom: #bdbdbd solid 1px;
+}
+
+.tab-selector {
+  user-select: none;
+  cursor: pointer;
+  font-size: 14;
+  font-weight: 600;
+  width: 9ch;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  overflow-y: hidden;
+  position: relative;
+}
+
+.underline {
+  width: 100%;
+  height: 10px;
+  border-radius: 15px;
+  position: absolute;
+  bottom: -13%;
+}
+
+.underline.blue {
+  background-color: #2f80ed;
+}
+
+.todos-container {
+  width: 100%;
+  overflow-x: none;
+  word-wrap: normal;
+}
+
+.todo {
+  margin: 20px auto;
+  font-weight: 500;
+  display: flex;
+  align-items: start;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
+
+.delete-button {
+  width: 18px;
+  align-self: center;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.new-todo-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 20px auto;
+}
+
+.new-todo-input {
+  width: 456px;
+  height: 56px;
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: 12px;
+  padding: 0 10px;
+  border: #bdbdbd 1px solid;
+  outline: none;
+}
+
+.add-button {
+  width: 109px;
+  height: 56px;
+  background-color: #2f80ed;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
   color: white;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.add-button:hover {
+  transition: all 0.3s;
+  filter: drop-shadow(0px 2px 6px #7fb1f3);
 }
