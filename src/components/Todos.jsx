@@ -1,11 +1,22 @@
 import React from "react";
-import deleteIcon from "../delete_icon.svg"
+import TrashBinIcon from "./TrashBinIcon";
 
 function Todos({ todos, handleChange, tab, handleDelete }) {
+
+  const filterTodos = (list, checked = undefined) => {
+    if (list.length == 0) return []
+    return list.filter((obj) => {
+      if (checked == undefined || obj.checked == checked) return obj;
+    });
+  };
+
+  const condition = tab == 0 ? undefined : tab == 2
+
   return (
     <div className="todos-container">
-      {todos.map((todo) => {
-        if (tab == 0 || tab == 1 && !todo.checked || tab == 2 && todo.checked) {
+      {filterTodos(todos, condition).length == 0 ?
+        <p className="empty-text">empty</p> :
+        filterTodos(todos, condition).map((todo) => {
           return (
             <div key={todo.id} className="todo">
               <input
@@ -22,12 +33,13 @@ function Todos({ todos, handleChange, tab, handleDelete }) {
                 {todo.content}
               </label>
               {tab == 2 &&
-                <img src={deleteIcon} alt="delete" className="delete-button" onClick={() => handleDelete(todo.id)} />
+                <TrashBinIcon className="delete-button" onClick={() => handleDelete(todo.id)} />
               }
             </div>
           )
-        }
-      })}
+        })}
+
+        <p className="signature">by Imad Fenniche</p>
     </div>
   );
 }

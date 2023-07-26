@@ -7,6 +7,21 @@
 }
 
 .App {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  cursor: default;
+}
+
+.signature{
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+}
+
+.app-container {
   padding: 10px;
   width: 600px;
   display: flex;
@@ -29,6 +44,7 @@
   justify-content: space-evenly;
   align-items: center;
   border-bottom: #bdbdbd solid 1px;
+  margin-bottom: 20px;
 }
 
 .tab-selector {
@@ -59,23 +75,32 @@
 
 .todos-container {
   width: 100%;
-  overflow-x: none;
-  word-wrap: normal;
 }
 
 .todo {
   margin: 20px auto;
+  font-size: 18px;
   font-weight: 500;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: start;
+  max-width: 100%;
+}
+
+.todo > label {
+  max-width: 100%;
+  overflow-x: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .line-through {
-  text-decoration: line-through;
+  text-decoration: line-through 2px #2f80ed;
 }
 
 .delete-button {
   width: 18px;
+  height: 18px;
   align-self: center;
   margin-left: auto;
   cursor: pointer;
@@ -85,7 +110,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin: 20px auto;
+  margin-bottom: 20px;
 }
 
 .new-todo-input {
@@ -99,20 +124,52 @@
   outline: none;
 }
 
+button {
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
 .add-button {
   width: 109px;
   height: 56px;
   background-color: #2f80ed;
+  border-radius: 12px;
   font-size: 14px;
   font-weight: 600;
-  border: none;
-  color: white;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s;
 }
 
 .add-button:hover {
   transition: all 0.3s;
   filter: drop-shadow(0px 2px 6px #7fb1f3);
+}
+
+.delete-all-button {
+  width: 124px;
+  height: 40px;
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: #eb5757;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border-radius: 4px;
+}
+
+.delete-all-button:hover {
+  transition: all 0.3s;
+  filter: drop-shadow(0px 2px 6px #eb575766);
+}
+
+.delete-all-button .trash-icon {
+  width: 12px;
+  fill: white;
+}
+
+.empty-text {
+  text-align: center;
+  color: #bdbdbd;
 }

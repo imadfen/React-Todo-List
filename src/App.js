@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import TabHead from "./components/TabHead";
 import Todos from "./components/Todos";
 import AddTodo from "./components/AddTodo";
+import TrashBinIcon from "./components/TrashBinIcon";
 
 function App() {
   const [tab, setTab] = useState(0);
-  const [todos, setTodos] = useState([
-    { id: 1, content: "Do coding challenges", checked: false },
-    { id: 2, content: "Do coding challenges", checked: false },
-    { id: 3, content: "Do coding challenges", checked: true },
-  ]);
+  const [todos, setTodos] = useState([]);
 
-  const hadnleSetTab = (selectedTab) => {
+  useEffect(() => {
+    getLocalStorageData();
+  }, []);
+
+  const handleSetTab = (selectedTab) => {
     if (tab != selectedTab) {
       setTab(selectedTab);
     }
@@ -22,33 +23,69 @@ function App() {
     const newList = todos.map((todo) =>
       todo.id === id ? { ...todo, checked: !todo.checked } : todo
     );
-    setTodos(newList);
+    updateLocalStorageData(newList);
   };
 
   const handleAddTodo = (content) => {
-    setTodos((prev) => [
-      ...prev,
-      { id: todos.length + 1, content, checked: false },
-    ]);
+    const newList = todos;
+    newList.push({ id: todos.length + 1, content, checked: false });
+    updateLocalStorageData(newList);
   };
 
   const handleDeleteTodo = (id) => {
-    setTodos(
-      todos.filter((todo) => {
-        if (todo.id !== id) return todo;
-      })
-    );
+    const newList = todos.filter((todo) => {
+      if (todo.id !== id) return todo;
+    });
+    updateLocalStorageData(newList);
+  };
+
+  const handleDeleteAll = () => {
+    const newList = todos.filter((todo) => {
+      if (!todo.checked) return todo;
+    });
+    updateLocalStorageData(newList);
+  };
+
+  const checkedTodoExist = (list) => {
+    return list.some((todo) => todo.checked === true);
+  };
+
+  const updateLocalStorageData = (newList) => {
+    localStorage.setItem("todos", JSON.stringify(newList));
+    getLocalStorageData();
+  };
+
+  const getLocalStorageData = () => {
+    const stringList = localStorage.getItem("todos");
+    if (stringList != null) {
+      const list = JSON.parse(stringList);
+      setTodos(list);
+    }
   };
 
   return (
     <div className="App">
-      <h1 className="title">#todo</h1>
+      <div className="app-container">
+        <h1 className="title">#todo</h1>
 
-      <TabHead tab={tab} hadnleSetTab={hadnleSetTab} />
+        <TabHead tab={tab} handleSetTab={handleSetTab} />
 
-      {[0, 1].includes(tab) && <AddTodo handleAddTodo={handleAddTodo} />}
+        {[0, 1].includes(tab) && <AddTodo handleAddTodo={handleAddTodo} />}
 
-      <Todos todos={todos} handleChange={handleCheck} tab={tab} handleDelete={handleDeleteTodo} />
+        <Todos
+          todos={todos}
+          handleChange={handleCheck}
+          tab={tab}
+          handleDelete={handleDeleteTodo}
+        />
+
+        {tab == 2 && checkedTodoExist(todos) && (
+          <button className="delete-all-button" onClick={handleDeleteAll}>
+            <TrashBinIcon className="trash-icon" />
+            <p>delete all</p>
+          </button>
+        )}
+      </div>
     </div>
   );
 }
